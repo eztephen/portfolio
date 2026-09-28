@@ -1,0 +1,326 @@
+@import "tailwindcss";
+
+/* Dark-first: the navy of the résumé header. Light follows the visitor's device. */
+:root {
+  --canvas: #0d1726;
+  --raised: #111e31;
+  --panel: #152539;
+  --line: #22364f;
+  --ink: #eaf0f8;
+  --ink-soft: #a6b5ca;
+  --ink-faint: #7d90ae;
+  --accent: #79abff;
+  --on-accent: #07142a;
+  /* the résumé's code-bar colours — one per service */
+  --teal: #5cc8d8;
+  --lime: #b6e05e;
+  --pink: #ff6496;
+  --violet: #b9a3ff;
+  --bar: #d5deea;
+  --shadow: 0 34px 70px -28px rgb(0 0 0 / 0.65);
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --canvas: #f2f4f8;
+    --raised: #ffffff;
+    --panel: #ffffff;
+    --line: #d7dfea;
+    --ink: #0d1726;
+    --ink-soft: #435677;
+    --ink-faint: #62759a;
+    --accent: #0b4fb3;
+    --on-accent: #ffffff;
+    --teal: #0b8398;
+    --lime: #4f820b;
+    --pink: #cc1b57;
+    --violet: #6547d0;
+    --bar: #97a9c1;
+    --shadow: 0 34px 70px -30px rgb(13 23 38 / 0.3);
+    color-scheme: light;
+  }
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-raised: var(--raised);
+  --color-panel: var(--panel);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-teal: var(--teal);
+  --color-lime: var(--lime);
+  --color-pink: var(--pink);
+  --color-violet: var(--violet);
+  --color-bar: var(--bar);
+  --font-display: var(--font-anybody), "Arial Narrow", Arial, sans-serif;
+  --font-sans: var(--font-instrument), "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, Menlo, monospace;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-instrument), "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+@utility site-wrap {
+  width: min(73.75rem, 100% - 2.5rem);
+  margin-inline: auto;
+}
+
+/* Anybody's width axis: 50 (condensed) → 150 (extended) */
+@utility display-wide {
+  font-variation-settings: "wdth" 118;
+}
+@utility display-condensed {
+  font-variation-settings: "wdth" 78;
+}
+
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.9rem 1.35rem;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s, transform 0.2s var(--ease-out-expo);
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn .arrow { transition: transform 0.35s var(--ease-out-expo); }
+  .btn:hover .arrow { transform: translateX(4px); }
+  .btn-primary { background: var(--accent); color: var(--on-accent); }
+  .btn-primary:hover { background: color-mix(in oklab, var(--accent) 86%, var(--ink)); }
+  .btn-ghost { border-color: var(--line); color: var(--ink); }
+  .btn-ghost:hover { border-color: var(--ink-faint); background: var(--raised); }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 0.2rem 0.5rem;
+    font-family: var(--font-jetbrains), ui-monospace, monospace;
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+}
+
+/* ── Hero: the name "compiles" in ───────────────────────────────────────────
+   Registered properties so the variable-font axes interpolate smoothly, both in
+   the intro keyframes and when the cursor bends the letters. */
+@property --wd {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 112;
+}
+@property --wg {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 800;
+}
+
+.kinetic-letter {
+  display: inline-block;
+  font-variation-settings: "wdth" var(--wd), "wght" var(--wg);
+  transition: --wd 0.45s var(--ease-out-expo), --wg 0.45s var(--ease-out-expo);
+  /* `backwards` fill: once the intro ends the letter falls back to its live --wd/--wg,
+     so the pointer effect can take over without fighting the animation. */
+  animation: name-in 1.2s var(--ease-out-expo) backwards;
+  animation-delay: calc(var(--i) * 55ms + 120ms);
+}
+
+@keyframes name-in {
+  from {
+    --wd: 50;
+    --wg: 100;
+    opacity: 0;
+    transform: translateY(0.18em);
+  }
+}
+
+/* The résumé's code bars, drawn line by line */
+.code-bar {
+  transform-origin: left center;
+  animation: bar-draw 0.75s var(--ease-out-expo) backwards;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes bar-draw {
+  from { transform: scaleX(0); opacity: 0.2; }
+}
+
+.rise {
+  animation: rise 0.9s var(--ease-out-expo) backwards;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(18px); }
+}
+
+/* Typed tagline — monospace, so 1ch is exactly one character */
+.type-line {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: bottom;
+  width: calc(var(--n) * 1ch);
+  animation: type calc(var(--n) * 30ms) steps(var(--n)) backwards;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes type {
+  from { width: 0; }
+}
+
+.caret::after {
+  content: "";
+  display: inline-block;
+  width: 0.55ch;
+  height: 1.05em;
+  margin-left: 0.2ch;
+  vertical-align: -0.16em;
+  background: var(--accent);
+  animation: blink 1.05s steps(1) infinite;
+}
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.pulse-dot {
+  animation: pulse 2.4s ease-out infinite;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--lime) 55%, transparent); }
+  70%, 100% { box-shadow: 0 0 0 9px transparent; }
+}
+
+/* ── Scroll reveals ─────────────────────────────────────────────────────────
+   RevealRoot only marks elements "pending" if they start below the fold, so
+   nothing already on screen ever blinks, and no-JS visitors see everything. */
+[data-reveal] {
+  transition: opacity 0.9s var(--ease-out-expo), transform 0.9s var(--ease-out-expo);
+  transition-delay: var(--d, 0ms);
+}
+[data-reveal][data-reveal-state="pending"] {
+  opacity: 0;
+  transform: translateY(32px);
+}
+
+.word-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+.word-mask > span {
+  display: inline-block;
+  transition: transform 0.95s var(--ease-out-expo);
+  transition-delay: calc(var(--i) * 40ms);
+}
+[data-reveal="words"][data-reveal-state="pending"] {
+  opacity: 1;
+  transform: none;
+}
+[data-reveal="words"][data-reveal-state="pending"] .word-mask > span {
+  transform: translateY(108%);
+}
+
+/* ── Work screenshots scroll inside their browser frame on hover ─────────── */
+.pan img {
+  object-position: 50% 0%;
+  transition: object-position 1.4s var(--ease-out-expo);
+}
+.pan-host:hover .pan img,
+.pan-host:focus-within .pan img {
+  object-position: 50% 100%;
+  transition: object-position 7s cubic-bezier(0.45, 0.05, 0.35, 1);
+}
+
+/* Service cards: the code bar runs to full width on hover */
+.service-bar {
+  transform-origin: left;
+  transform: scaleX(0.34);
+  transition: transform 0.7s var(--ease-out-expo);
+}
+.group:hover .service-bar {
+  transform: scaleX(1);
+}
+
+/* ── Scroll-driven pieces (progressive: static where unsupported) ──────── */
+.scroll-progress {
+  transform-origin: left;
+  transform: scaleX(0);
+}
+.gitlog-fill {
+  transform-origin: top;
+}
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    animation: grow-x linear both;
+    animation-timeline: scroll(root);
+  }
+  .gitlog-fill {
+    animation: grow-y linear both;
+    animation-timeline: view();
+    animation-range: cover 12% cover 78%;
+  }
+}
+@keyframes grow-x {
+  to { transform: scaleX(1); }
+}
+@keyframes grow-y {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  [data-reveal][data-reveal-state="pending"],
+  [data-reveal="words"][data-reveal-state="pending"] .word-mask > span {
+    opacity: 1;
+    transform: none;
+  }
+  .gitlog-fill { transform: none; }
+}
+
+/* Very large screens: scale the whole layout up proportionally instead of leaving a
+   narrow column floating in the middle. Breakpoints are unaffected — media queries
+   measure against the browser's default size, not this one. */
+@media (width >= 1800px) {
+  html { font-size: 112.5%; }
+}
+@media (width >= 2300px) {
+  html { font-size: 125%; }
+}
