@@ -62,7 +62,7 @@ export default function SiteHeader() {
 
         <div className="flex items-center gap-2.5">
           <a href="#contact" onClick={close} className="btn btn-primary px-4 py-2.5 text-[0.88rem] max-[399px]:hidden">
-            Start a project
+            How can I help?
           </a>
           <button
             type="button"
@@ -105,7 +105,7 @@ export default function SiteHeader() {
           ))}
           <li className="pt-5 pb-3">
             <a href="#contact" onClick={close} className="btn btn-primary w-full justify-center">
-              Start a project <span className="arrow" aria-hidden="true">→</span>
+              How can I help? <span className="arrow" aria-hidden="true">→</span>
             </a>
           </li>
         </ul>

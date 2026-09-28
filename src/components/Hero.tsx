@@ -58,7 +58,7 @@ export default function Hero() {
 
             <div className="rise flex flex-wrap gap-3" style={{ "--d": "1650ms" } as React.CSSProperties}>
               <a href="#contact" className="btn btn-primary">
-                Start a project <span className="arrow" aria-hidden="true">→</span>
+                How can I help? <span className="arrow" aria-hidden="true">→</span>
               </a>
               <a href="#work" className="btn btn-ghost">
                 See my work
