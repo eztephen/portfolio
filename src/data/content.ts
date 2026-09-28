@@ -173,7 +173,7 @@ export const SERVICES: { tone: Tone; title: string; body: string; proof: string;
 ];
 
 // ─── Work ──────────────────────────────────────────────────────────────────
-// `href: null` hides the link. Paste the live URL in once each project is deployed.
+// `href: null` hides the link; a URL shows a "Visit site" / "Try the live demo" button.
 export const FEATURED = {
   kind: "Product · 2026",
   title: "Walkthrough",
@@ -188,7 +188,7 @@ export const FEATURED = {
     "An owner report that prints cleanly to PDF",
   ],
   stack: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS"],
-  href: null as string | null,
+  href: "https://walkthrough-demo.vercel.app" as string | null,
   images: {
     report: "/work/walkthrough-report.jpg",
     mobile: "/work/walkthrough-mobile.jpg",
@@ -212,7 +212,7 @@ export const CLIENT_WORK: WorkCard = {
   body: "A five-page site for a photography and videography studio: a slideshow hero, a filterable gallery with lightbox, service pages, and an enquiry form that emails the studio directly. Contact details live in one config file the owner can change.",
   stack: ["Next.js", "React", "Tailwind CSS", "Nodemailer"],
   image: "/work/pzaideletrato-desktop.jpg",
-  href: null,
+  href: "https://pzaideletrato.vercel.app",
 };
 
 export const SAMPLES: WorkCard[] = [
@@ -223,7 +223,7 @@ export const SAMPLES: WorkCard[] = [
     body: "Published fees, a first-visit walkthrough for nervous patients, and opening hours that highlight today.",
     stack: ["Next.js", "Tailwind"],
     image: "/work/fernbrook-desktop.jpg",
-    href: null,
+    href: "https://fernbrookdental.vercel.app",
   },
   {
     kind: "Design sample · Restaurant",
@@ -232,7 +232,7 @@ export const SAMPLES: WorkCard[] = [
     body: "A tabbed menu the owner edits in one file, table reservations, and tonight's special pinned under the hero.",
     stack: ["Next.js", "Tailwind"],
     image: "/work/emberlane-desktop.jpg",
-    href: null,
+    href: "https://emberlane-restaurant.vercel.app",
   },
   {
     kind: "Design sample · Trades",
@@ -241,7 +241,7 @@ export const SAMPLES: WorkCard[] = [
     body: "A quote form above the fold, a live suburb checker, and tap-to-call — turning a panicked search into a phone call.",
     stack: ["Next.js", "Tailwind"],
     image: "/work/coldfront-desktop.jpg",
-    href: null,
+    href: "https://coldfront.vercel.app",
   },
 ];
 

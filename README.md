@@ -1,5 +1,7 @@
 # Eztephen Bacuño — Portfolio
 
+**Live:** https://eztephen.vercel.app
+
 Personal portfolio for finding clients: services, selected work, a career timeline, and contact. Built around the code-line bars from my résumé — the page has a live editor-style minimap, a name that sets itself in a variable font, and a `git log` of my career.
 
 Next.js 16, React 19, Tailwind CSS v4, TypeScript. No animation library — everything is CSS plus a few small hooks.
@@ -40,6 +42,8 @@ Screenshots live in `public/work/`. They're full-page captures (1200px wide JPEG
 ## Deploy
 
 Push to a Git host and import the repo on [Vercel](https://vercel.com/new). On Vercel, the site URL used for link previews is detected automatically. On any other host, set `SITE_URL=https://your-domain` so LinkedIn and Messenger previews resolve correctly.
+
+Deployed from this repo's `main` branch — every push redeploys automatically.
 
 ## Before going public
 
